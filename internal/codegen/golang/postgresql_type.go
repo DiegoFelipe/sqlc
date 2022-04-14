@@ -40,52 +40,28 @@ func postgresType(req *plugin.CodeGenRequest, col *plugin.Column) string {
 
 	switch columnType {
 	case "serial", "serial4", "pg_catalog.serial4":
-		if notNull {
-			return "int32"
-		}
-		return "sql.NullInt32"
+		return "int32"
 
 	case "bigserial", "serial8", "pg_catalog.serial8":
-		if notNull {
-			return "int64"
-		}
-		return "sql.NullInt64"
+		return "int64"
 
 	case "smallserial", "serial2", "pg_catalog.serial2":
-		if notNull {
-			return "int16"
-		}
-		return "sql.NullInt16"
+		return "int16"
 
 	case "integer", "int", "int4", "pg_catalog.int4":
-		if notNull {
-			return "int32"
-		}
-		return "sql.NullInt32"
+		return "int32"
 
 	case "bigint", "int8", "pg_catalog.int8":
-		if notNull {
-			return "int64"
-		}
-		return "sql.NullInt64"
+		return "int64"
 
 	case "smallint", "int2", "pg_catalog.int2":
-		if notNull {
-			return "int16"
-		}
-		return "sql.NullInt16"
+		return "int16"
 
 	case "float", "double precision", "float8", "pg_catalog.float8":
-		if notNull {
-			return "float64"
-		}
-		return "sql.NullFloat64"
+		return "float64"
 
 	case "real", "float4", "pg_catalog.float4":
-		if notNull {
-			return "float32"
-		}
-		return "sql.NullFloat64" // TODO: Change to sql.NullFloat32 after updating the go.mod file
+		return "float32"
 
 	case "numeric", "pg_catalog.numeric", "money":
 		if driver == SQLDriverPGXV4 {
@@ -95,16 +71,10 @@ func postgresType(req *plugin.CodeGenRequest, col *plugin.Column) string {
 		// returns numerics as strings.
 		//
 		// https://github.com/lib/pq/issues/648
-		if notNull {
-			return "string"
-		}
-		return "sql.NullString"
+		return "string"
 
 	case "boolean", "bool", "pg_catalog.bool":
-		if notNull {
-			return "bool"
-		}
-		return "sql.NullBool"
+		return "bool"
 
 	case "json":
 		switch driver {
@@ -138,34 +108,19 @@ func postgresType(req *plugin.CodeGenRequest, col *plugin.Column) string {
 		return "[]byte"
 
 	case "date":
-		if notNull {
-			return "time.Time"
-		}
-		return "sql.NullTime"
+		return "time.Time"
 
 	case "pg_catalog.time", "pg_catalog.timetz":
-		if notNull {
-			return "time.Time"
-		}
-		return "sql.NullTime"
+		return "time.Time"
 
 	case "pg_catalog.timestamp", "pg_catalog.timestamptz", "timestamptz":
-		if notNull {
-			return "time.Time"
-		}
-		return "sql.NullTime"
+		return "time.Time"
 
 	case "text", "pg_catalog.varchar", "pg_catalog.bpchar", "string":
-		if notNull {
-			return "string"
-		}
-		return "sql.NullString"
+		return "string"
 
 	case "uuid":
-		if notNull {
-			return "uuid.UUID"
-		}
-		return "uuid.NullUUID"
+		return "uuid.UUID"
 
 	case "inet":
 		switch driver {
@@ -203,16 +158,10 @@ func postgresType(req *plugin.CodeGenRequest, col *plugin.Column) string {
 		// facilities for searching through label trees are provided.
 		//
 		// https://www.postgresql.org/docs/current/ltree.html
-		if notNull {
-			return "string"
-		}
-		return "sql.NullString"
+		return "string"
 
 	case "interval", "pg_catalog.interval":
-		if notNull {
-			return "int64"
-		}
-		return "sql.NullInt64"
+		return "int64"
 
 	case "daterange":
 		if driver == SQLDriverPGXV4 {
